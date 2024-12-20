@@ -24,6 +24,21 @@ double e(int x , int n){
     return r + p / f;
 }
 
+double e2(int x , int n){
+    double s=1;
+    int i;
+    double num = 1;
+    double den = 1;
+
+    for(i=1;i<=n;i++){
+        nunm*=x;
+        den*=i;
+        s*=num/den;
+    }
+    
+    return s;
+}
+
 int main(){
     // Calculate e^3 using 10 terms of the Taylor series and print the result
     cout << e(3, 10) << endl;
