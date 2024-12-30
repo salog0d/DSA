@@ -21,4 +21,4 @@ void merge(int A[], int B[], int lenA, int lenB, int C[], int &lenC){
     for(;j<lenB;j++){
         C[lenC++]=B[j];
     }
-}
+} //this is code for merging two arrays
