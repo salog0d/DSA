@@ -1,24 +1,34 @@
 #include <iostream>
 using namespace std;
 
-//merging two arrays
+int* findDuplicates(int A[], int length, int &dupCount) {
+    int* dup = new int[length]; // Allocate memory for duplicates
+    dupCount = 0; // Initialize the count of duplicates
 
-void merge(int A[], int B[], int lenA, int lenB, int C[], int &lenC){
-    int i=0, j=0;
-    lenC=0;
-
-    while(i<lenA && j<lenB){
-        if(A[i]<B[j]){
-            C[lenC++]=A[i++];
-        }else{
-            C[lenC++]=B[j++];
+    for (int i = 0; i < length - 1; i++) {
+        if (A[i] == A[i + 1]) {
+            if (dupCount == 0 || dup[dupCount - 1] != A[i]) { 
+                dup[dupCount] = A[i];
+                dupCount++;
+            }
         }
     }
-    for(;i<lenA;i++){
-        C[lenC++]=A[i];
-    }
+    return dup; // Return the dynamically allocated array
+}
 
-    for(;j<lenB;j++){
-        C[lenC++]=B[j];
+int main() {
+    int A[] = {1, 2, 3, 4, 4, 4, 5, 6, 7, 8, 9, 9, 10, 10, 11, 12};
+    int lenA = sizeof(A) / sizeof(A[0]);
+
+    int dupCount; // To store the count of duplicates
+    int* duplicates = findDuplicates(A, lenA, dupCount);
+
+    cout << "Los duplicados encontrados son: ";
+    for (int i = 0; i < dupCount; i++) {
+        cout << duplicates[i] << " ";
     }
-} //this is code for merging two arrays
+    cout << endl;
+
+    delete[] duplicates; // Free the allocated memory
+    return 0;
+}
