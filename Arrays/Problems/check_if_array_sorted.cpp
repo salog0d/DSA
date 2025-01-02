@@ -26,11 +26,6 @@ void insertElement(int array[], int x){
     return array[];
 }
 
-
-
-
-
-
 int main(){
 
     int myArray[] = {1, 4, 3, 4, 5};
