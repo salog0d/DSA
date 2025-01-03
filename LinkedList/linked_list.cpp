@@ -152,12 +152,47 @@ public:
         }
     }
 
+    int insert(Node *p, int index, int x) {
+        if (index < 0 || index > countNodes(p)) {
+            return -1;
+        }
+        Node *temp = new Node();
+        temp->data = x;
+        if (index == 0) {
+            temp->next = head;
+            head = temp;
+        } else {
+            Node *q = head;
+            for (int i = 0; i < index - 1 && q; i++) {
+                q = q->next;
+            }
+            temp->next = q->next;
+            q->next = temp;
+        }
+        return x;
+    }
+
+    int insertLast(int x) {
+        Node * next = new Node();
+        t->data = x;
+        t->next = nullptr;
+        if(first==nullptr){
+            first = last = t;
+    }
+        else{
+            last->next = t;
+            last = t;
+    }
+        return x;
+    }
+    
+
     
 
 private:
     Node* head;  // Pointer to the first node in the list
 };
-
+}
 int main() {
     LinkedList list;
     list.append(1);
