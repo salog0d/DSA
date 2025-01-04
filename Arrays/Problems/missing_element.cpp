@@ -19,17 +19,5 @@ int missingEllement2(int A[], int n){
         }
     }
 
-int multipleMissing(int A[], int n){
-    int diff = A[0];
-    int missing [];
-    for(int i=0; i<length; i++){ //length of A
-        if(A[i]-i != diff){
-            missing[n++]= A[i];
-        }
-    }
-    for(int i=0; i<length; i++){//length of B
-        cout<<'the missing elements are' << B[i]<< endl;
-
-}
 
 //Make another solution by yourself
