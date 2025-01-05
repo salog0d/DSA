@@ -185,6 +185,122 @@ public:
     }
         return x;
     }
+
+    int deleteNode(Node *p, int index) {
+        if (index < 1 || index > countNodes(p)) {
+            return -1;
+        }
+        Node *q = nullptr;
+        int x = -1;
+        if (index == 1) {
+            q = head;
+            x = head->data;
+            head = head->next;
+            delete q;
+        } else {
+            for (int i = 0; i < index - 1; i++) {
+                q = p;
+                p = p->next;
+            }
+            q->next = p->next;
+            x = p->data;
+            delete p;
+        }
+        return x;
+    }
+
+    int isSorted(Node *p) {
+        int x = INT_MIN;
+        while (p != nullptr) {
+            if (p->data < x) {
+                return 0;
+            }
+            x = p->data;
+            p = p->next;
+        }
+        return 1;
+    }
+
+    void removeDuplicates(Node *p) {
+        Node *q = p->next;
+        while (q != nullptr) {
+            if (p->data != q->data) {
+                p = q;
+                q = q->next;
+            } else {
+                p->next = q->next;
+                delete q;
+                q = p->next;
+            }
+        }
+    }
+
+    void reverse(Node *p) {
+        Node *q=p;
+        Node *r=nullptr;
+        Node *temp = nullptr;
+        while(q != nullptr){
+            temp=r;
+            r=q;
+            q=q->next;
+            r->next=temp;
+        }
+        p=r;
+    }
+
+    void reverseRecursive(Node *q, Node *p) {
+        if (p != nullptr) {
+            reverseRecursive(p, p->next);
+            p->next = q;
+        } else {
+            head = q;
+        }
+    }
+
+    void concatenate(Node *p, Node *q) {
+        while (p->next != nullptr) {
+            p = p->next;
+        }
+        p->next = q;
+    }
+
+    void reverseList2(Node * p){
+        Node * temp = p;
+        i=0;
+        int A[countNodes(p)];
+        while(temp != nullptr){
+            A[i] = temp->data;
+            temp = temp->next;
+            i++;
+        }
+
+        temp = p;
+        i--;
+        while(temp != nullptr){
+            temp->data = A[i];
+            temp = temp->next;
+            i--;
+        }
+    }
+
+    void reverseListRecursive2(Node * p){
+        static int i = 0;
+        int A[countNodes(p)];
+        Node * temp = p;
+        while(temp != nullptr){
+            A[i] = temp->data;
+            temp = temp->next;
+            i++;
+        }
+
+        temp = p;
+        i--;
+        while(temp != nullptr){
+            temp->data = A[i];
+            temp = temp->next;
+            i--;
+        }
+    }
     
 
     
