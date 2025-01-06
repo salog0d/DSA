@@ -186,8 +186,94 @@ public:
         return x;
     }
     
+    int insertSorted(Node* p, int x) {
+    Node* temp = new Node();
+    temp->data = x;
+    temp->next = nullptr;
 
-    
+    // Si la lista está vacía o el nuevo nodo debe ser el primero
+    if (head == nullptr || head->data >= x) {
+        temp->next = p;
+        p = temp;
+        return x;
+    }
+
+    // Encuentra la posición correcta para insertar el nuevo nodo
+    Node* current = p;
+    while (current->next != nullptr && current->next->data < x) {
+        current = current->next;
+    }
+
+    temp->next = current->next;
+    current->next = temp;
+
+    return x;
+}
+
+int delete(int index){
+    Node *p, *q;
+    int x = -1;
+    if(index < 1 || index > countNodes(head)){
+        return -1;
+    }
+
+    if(index == 1){
+        p = head;
+        head = head->next;
+        x = p->data;
+        delete p;
+
+    }else{
+        p = head;
+        for(int i=0; i<index-1; i++){
+            q = p;
+            p = p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        delete p;
+    }
+}
+
+bool sortedList(Node *head){
+    Node * temp = head;
+    for(int i=0; i<countNodes(head)-1; i++){
+        if(temp->data > temp->next->data){
+            return false;
+        }
+        temp = temp->next;
+    }
+    return true;
+}
+
+bool sortedList2(Node* head) {
+    Node* temp = head;
+    while (temp != nullptr && temp->next != nullptr) {
+        if (temp->data > temp->next->data) {
+            return false;
+        }
+        temp = temp->next;
+    }
+    return true;
+}
+
+void removeDuplicates(Node* head) {
+    if (head == nullptr) {
+        return;
+    }
+    Node* current = head;
+    while (current->next != nullptr) {
+        if (current->data == current->next->data) {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+        } else {
+            current = current->next;
+        }
+    }
+}
+
+
 
 private:
     Node* head;  // Pointer to the first node in the list
