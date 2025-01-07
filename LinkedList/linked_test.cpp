@@ -170,6 +170,11 @@ public:
         temp->next=list2.head;
     }
 
+    void merge(LinkedList list, LinkedList list2){
+        
+    }
+
+
 };
 
 int main(){
@@ -185,9 +190,8 @@ int main(){
     list2.append(3);
     list2.append(4);
     list2.append(5);
-    list.concatenate(list, list2);
+    list.merge(list, list2);
     list.displayList();
-
 
     return 0;
 }

@@ -43,363 +43,202 @@ public:
         cout << endl;  // Print a newline at the end
     }
 
+    // Recursive method to display the contents of the list
     void displayRecursive(Node* p) {
         if (p != nullptr) {
-            cout << p->data << " ";
-            displayRecursive(p->next);
+            cout << p->data << " "; // Print the data of the current node
+            displayRecursive(p->next); // Recursive call to the next node
         }
+    }
 
-        // Method to count the number of nodes in the list
-        int countNodes(Node* p) {
-            int count = 0;
-            while (p != nullptr) {
-                count++;
-                p = p->next;
-            }
-            return count;
+    // Method to count the number of nodes in the list
+    int countNodes(Node* p) {
+        int count = 0; // Initialize a counter
+        while (p != nullptr) { // Traverse the list
+            count++; // Increment the counter for each node
+            p = p->next; // Move to the next node
         }
+        return count; // Return the total count
+    }
 
-    int sumRecursive(Node *p) {
-        if (p == nullptr) {
+    // Recursive method to calculate the sum of node data
+    int sumRecursive(Node* p) {
+        if (p == nullptr) { // Base case: no nodes left
             return 0;
         }
-        return sum(p->next) + p->data;
+        return sumRecursive(p->next) + p->data; // Recursive sum calculation
     }
 
-    int sum(Node *p) {
-        int sum = 0;
-        while (p != nullptr) {
-            sum += p->data;
-            p = p->next;
+    // Method to calculate the sum of node data iteratively
+    int sum(Node* p) {
+        int sum = 0; // Initialize the sum
+        while (p != nullptr) { // Traverse the list
+            sum += p->data; // Add the data of the current node
+            p = p->next; // Move to the next node
         }
-        return sum;
+        return sum; // Return the total sum
     }
 
-    int max(Node *p) {
-        int max = INT_MIN;
-        while (p != nullptr) {
-            if (p->data > max) {
+    // Method to find the maximum node value iteratively
+    int max(Node* p) {
+        int max = INT_MIN; // Initialize to the smallest possible integer
+        while (p != nullptr) { // Traverse the list
+            if (p->data > max) { // Update max if current node's data is larger
                 max = p->data;
             }
-            p = p->next;
+            p = p->next; // Move to the next node
         }
-        return max;
+        return max; // Return the maximum value
     }
 
-    int maxRecursive(Node *p) {
-        if (p == nullptr) {
+    // Recursive method to find the maximum node value
+    int maxRecursive(Node* p) {
+        if (p == nullptr) { // Base case: no nodes left
             return INT_MIN;
         }
-        int x = maxRecursive(p->next);
-        return x > p->data ? x : p->data;
+        int x = maxRecursive(p->next); // Recursive call to find the max in the rest of the list
+        return x > p->data ? x : p->data; // Compare current node's data with the rest
     }
 
-    int linearSearch(Node *p, int key) {
-        while (p != nullptr) {
-            if (p->data == key) {
+    // Method to perform a linear search iteratively
+    int linearSearch(Node* p, int key) {
+        while (p != nullptr) { // Traverse the list
+            if (p->data == key) { // If the key is found
                 return p->data;
             }
-            p = p->next;
+            p = p->next; // Move to the next node
         }
-        return -1;
+        return -1; // Return -1 if the key is not found
     }
 
-    int linearSearchRecursive(Node *p, int key) {
-        if (p == nullptr) {
+    // Recursive method to perform a linear search
+    int linearSearchRecursive(Node* p, int key) {
+        if (p == nullptr) { // Base case: no nodes left
             return -1;
         }
-        if (p->data == key) {
+        if (p->data == key) { // If the key is found
             return p->data;
         }
-        return linearSearchRecursive(p->next, key);
+        return linearSearchRecursive(p->next, key); // Recursive call for the next node
     }
 
-    int binarySearch(Node *p, int key) {
-        int low = 0;
-        int high = countNodes(p) - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            Node *temp = p;
-            for (int i = 0; i < mid; i++) {
-                temp = temp->next;
-            }
-            if (temp->data == key) {
-                return temp->data;
-            } else if (temp->data < key) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
+    // Iterative method to reverse the linked list
+    void reverse(Node* p) {
+        Node* q = nullptr; // Previous node pointer
+        Node* r = nullptr; // Temporary node pointer
+        while (p != nullptr) { // Traverse the list
+            r = q; // Store the previous node
+            q = p; // Update the current node
+            p = p->next; // Move to the next node
+            q->next = r; // Reverse the link
         }
-        return -1;
+        head = q; // Update the head pointer to the new first node
     }
 
-    int binarySearchRecursive(Node *p, int low, int high, int key) {
-        if (low > high) {
-            return -1;
-        }
-        int mid = (low + high) / 2;
-        Node *temp = p;
-        for (int i = 0; i < mid; i++) {
-            temp = temp->next;
-        }
-        if (temp->data == key) {
-            return temp->data;
-        } else if (temp->data < key) {
-            return binarySearchRecursive(p, mid + 1, high, key);
+    // Recursive method to reverse the linked list
+    void reverseRecursive(Node* q, Node* p) {
+        if (p != nullptr) { // Base case: nodes left to reverse
+            reverseRecursive(p, p->next); // Recursive call for the next node
+            p->next = q; // Reverse the link
         } else {
-            return binarySearchRecursive(p, low, mid - 1, key);
+            head = q; // Update the head pointer to the new first node
         }
     }
 
-    int insert(Node *p, int index, int x) {
-        if (index < 0 || index > countNodes(p)) {
-            return -1;
-        }
-        Node *temp = new Node();
-        temp->data = x;
-        if (index == 0) {
-            temp->next = head;
-            head = temp;
-        } else {
-            Node *q = head;
-            for (int i = 0; i < index - 1 && q; i++) {
-                q = q->next;
-            }
-            temp->next = q->next;
-            q->next = temp;
-        }
-        return x;
-    }
-
-    int insertLast(int x) {
-        Node * next = new Node();
-        t->data = x;
-        t->next = nullptr;
-        if(first==nullptr){
-            first = last = t;
-    }
-        else{
-            last->next = t;
-            last = t;
-    }
-        return x;
-    }
-
-    int deleteNode(Node *p, int index) {
-        if (index < 1 || index > countNodes(p)) {
-            return -1;
-        }
-        Node *q = nullptr;
-        int x = -1;
-        if (index == 1) {
-            q = head;
-            x = head->data;
-            head = head->next;
-            delete q;
-        } else {
-            for (int i = 0; i < index - 1; i++) {
-                q = p;
-                p = p->next;
-            }
-            q->next = p->next;
-            x = p->data;
-            delete p;
-        }
-        return x;
-    }
-
-    int isSorted(Node *p) {
-        int x = INT_MIN;
-        while (p != nullptr) {
-            if (p->data < x) {
-                return 0;
-            }
-            x = p->data;
+    // Method to concatenate two linked lists
+    void concatenate(Node* p, Node* q) {
+        while (p->next != nullptr) { // Traverse to the end of the first list
             p = p->next;
         }
-        return 1;
+        p->next = q; // Link the last node of the first list to the first node of the second list
     }
 
-    void removeDuplicates(Node *p) {
-        Node *q = p->next;
-        while (q != nullptr) {
-            if (p->data != q->data) {
-                p = q;
-                q = q->next;
-            } else {
-                p->next = q->next;
-                delete q;
-                q = p->next;
-            }
-        }
-    }
-
-    void reverse(Node *p) {
-        Node *q=p;
-        Node *r=nullptr;
-        Node *temp = nullptr;
-        while(q != nullptr){
-            temp=r;
-            r=q;
-            q=q->next;
-            r->next=temp;
-        }
-        p=r;
-    }
-
-    void reverseRecursive(Node *q, Node *p) {
-        if (p != nullptr) {
-            reverseRecursive(p, p->next);
-            p->next = q;
-        } else {
-            head = q;
-        }
-    }
-
-    void concatenate(Node *p, Node *q) {
-        while (p->next != nullptr) {
-            p = p->next;
-        }
-        p->next = q;
-    }
-
-    void reverseList2(Node * p){
-        Node * temp = p;
-        i=0;
-        int A[countNodes(p)];
-        while(temp != nullptr){
-            A[i] = temp->data;
-            temp = temp->next;
+    // Iterative method to reverse the list using an array
+    void reverseList2(Node* p) {
+        Node* temp = p; // Temporary pointer
+        int i = 0; // Index counter
+        int A[countNodes(p)]; // Array to store node data
+        while (temp != nullptr) { // Traverse the list
+            A[i] = temp->data; // Store node data in the array
+            temp = temp->next; // Move to the next node
             i++;
         }
-
-        temp = p;
-        i--;
-        while(temp != nullptr){
-            temp->data = A[i];
-            temp = temp->next;
-            i--;
+        temp = p; // Reset temp to the head of the list
+        i--; // Adjust index to the last element of the array
+        while (temp != nullptr) { // Traverse the list again
+            temp->data = A[i]; // Assign reversed data from the array
+            temp = temp->next; // Move to the next node
+            i--; // Decrement the index
         }
     }
 
-    void reverseListRecursive2(Node * p){
-        static int i = 0;
-        int A[countNodes(p)];
-        Node * temp = p;
-        while(temp != nullptr){
-            A[i] = temp->data;
-            temp = temp->next;
-            i++;
-        }
+        void merge(LinkedList& list, LinkedList& list2) {
+    Node* p = list.head;
+    Node* q = list2.head;
+    Node* last = nullptr;
 
-        temp = p;
-        i--;
-        while(temp != nullptr){
-            temp->data = A[i];
-            temp = temp->next;
-            i--;
-        }
-    }
-    
-    int insertSorted(Node* p, int x) {
-    Node* temp = new Node();
-    temp->data = x;
-    temp->next = nullptr;
-
-    // Si la lista está vacía o el nuevo nodo debe ser el primero
-    if (head == nullptr || head->data >= x) {
-        temp->next = p;
-        p = temp;
-        return x;
-    }
-
-    // Encuentra la posición correcta para insertar el nuevo nodo
-    Node* current = p;
-    while (current->next != nullptr && current->next->data < x) {
-        current = current->next;
-    }
-
-    temp->next = current->next;
-    current->next = temp;
-
-    return x;
-}
-
-int delete(int index){
-    Node *p, *q;
-    int x = -1;
-    if(index < 1 || index > countNodes(head)){
-        return -1;
-    }
-
-    if(index == 1){
-        p = head;
-        head = head->next;
-        x = p->data;
-        delete p;
-
-    }else{
-        p = head;
-        for(int i=0; i<index-1; i++){
-            q = p;
-            p = p->next;
-        }
-        q->next = p->next;
-        x = p->data;
-        delete p;
-    }
-}
-
-bool sortedList(Node *head){
-    Node * temp = head;
-    for(int i=0; i<countNodes(head)-1; i++){
-        if(temp->data > temp->next->data){
-            return false;
-        }
-        temp = temp->next;
-    }
-    return true;
-}
-
-bool sortedList2(Node* head) {
-    Node* temp = head;
-    while (temp != nullptr && temp->next != nullptr) {
-        if (temp->data > temp->next->data) {
-            return false;
-        }
-        temp = temp->next;
-    }
-    return true;
-}
-
-void removeDuplicates(Node* head) {
-    if (head == nullptr) {
+    if (!p) {
+        list.head = q;
         return;
     }
-    Node* current = head;
-    while (current->next != nullptr) {
-        if (current->data == current->next->data) {
-            Node* temp = current->next;
-            current->next = current->next->next;
-            delete temp;
-        } else {
-            current = current->next;
-        }
+    if (!q) {
+        return;
     }
+
+    if (p->data < q->data) {
+        list.head = last = p;
+        p = p->next;
+    } else {
+        list.head = last = q;
+        q = q->next;
+    }
+    last->next = nullptr;
+
+    while (p != nullptr && q != nullptr) {
+        if (p->data < q->data) {
+            last->next = p;
+            last = p;
+            p = p->next;
+        } else {
+            last->next = q;
+            last = q;
+            q = q->next;
+        }
+        last->next = nullptr;
+    }
+
+    if (p != nullptr) {
+        last->next = p;
+    } else {
+        last->next = q;
+    }
+
+    list2.head = nullptr;
 }
-
-
 
 private:
-    Node* head;  // Pointer to the first node in the list
+    Node* head; // Pointer to the first node in the list
 };
-}
+
 int main() {
-    LinkedList list;
+    LinkedList list; // Create a linked list object
+
+    // Append elements to the list
     list.append(1);
     list.append(2);
     list.append(3);
+
+    // Display the contents of the list
+    cout << "List contents: ";
     list.display();
+
+    // Reverse the list iteratively
+    cout << "Reversing list..." << endl;
+    list.reverse(list.head);
+
+    // Display the reversed list
+    cout << "Reversed list: ";
+    list.display();
+
     return 0;
 }
