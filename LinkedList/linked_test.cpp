@@ -7,6 +7,10 @@ struct Node{
 };
 
 class LinkedList {
+
+private:
+    Node* head; 
+
 public:
     
     LinkedList() : head(nullptr) {}
@@ -99,12 +103,45 @@ public:
         temp->next = inserction;
     }
 
-    void deleteNode(int index){
+    void deleteNode(int index) {
+        if (head == nullptr) {  
+            cout << "List is empty!" << endl;
+            return;
+        }
 
+        Node* temp = head;
+
+        if (index == 0) {
+            head = temp->next;  
+            delete temp;        
+            return;
+        }
+
+        for (int i = 0; temp != nullptr && i < index - 1; i++) {
+            temp = temp->next;
+        }
+
+        if (temp == nullptr || temp->next == nullptr) {
+            cout << "Index out of range!" << endl;
+            return;
+        }
+
+        Node* temp2 = temp->next;  
+        temp->next = temp2->next;   
+        delete temp2;              
     }
 
-    void sorted(){
 
+    void sorted(){
+        Node * temp = head;
+        while(temp != nullptr && temp->next != nullptr){
+            if(temp->data>temp->next->data){
+                cout<<"The list is not sorted"<<endl;
+                return;
+            }
+            temp = temp->next;
+        }
+        cout<<"The list is sorted"<<endl;
     }
 
     void removeDuplicates(){
@@ -112,34 +149,45 @@ public:
     }
 
     void reverse(){
+        Node *p= head;
+        Node *q = nullptr;
+        Node *r = nullptr;
 
+        while(p != nullptr){
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
+        }
+        head = q;   
+     }
+
+    void concatenate(LinkedList list, LinkedList list2){
+        Node * temp = list.head;
+        while(temp->next!=nullptr){
+            temp= temp->next;
+        }
+        temp->next=list2.head;
     }
 
-    void concatenate(){
-        
-    }
-
-private:
-    Node* head; 
 };
 
 int main(){
     LinkedList list;
+    LinkedList list2;
     list.append(1);
     list.append(2);
     list.append(3);
     list.append(4);
     list.append(5);
+    list2.append(1);
+    list2.append(2);
+    list2.append(3);
+    list2.append(4);
+    list2.append(5);
+    list.concatenate(list, list2);
     list.displayList();
-    list.countNodes();
-    list.sum();
-    list.max();
-    list.insert(3,7);
-    list.displayList();
-    list.insertLast(100);
-    list.displayList();
-    list.sum();
-    list.max();
+
 
     return 0;
 }
